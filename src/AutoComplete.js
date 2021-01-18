@@ -64,17 +64,27 @@ class AutoComplete extends React.Component {
           .then((res) => {
             const orginalData = cloneDeep(res.data);
             res.data.forEach((rec) => {
-              rec.highlights.forEach((item) => {
-                rec[item.path] = item.texts.map((item, i) => {
+              rec.highlights.forEach((highlight) => {
+                rec[highlight.path] = highlight.texts.map((item, i) => {
                   if (item.type === "hit") {
-                    return (
-                      <span
-                        key={`hit-${item.value}-${i}`}
-                        style={{ color: "blue" }}
-                      >
-                        {item.value}
-                      </span>
-                    );
+                    if (highlight.path === "items") {
+                      return (
+                        <Fragment>
+                          <li style={{ marginBottom: 8 }}>
+                            "{item.value}" found in items
+                          </li>
+                        </Fragment>
+                      );
+                    } else {
+                      return (
+                        <span
+                          key={`hit-${item.value}-${i}`}
+                          style={{ color: "blue" }}
+                        >
+                          {item.value}
+                        </span>
+                      );
+                    }
                   }
                   return item.value;
                 });
@@ -156,6 +166,7 @@ class AutoComplete extends React.Component {
                         <p style={{ paddingBottom: 8 }}>
                           <i>{data.name}</i>
                         </p>
+                        <p>{data.items}</p>
                         <p>
                           {data.address} {` ${data.pincode}`}
                         </p>
