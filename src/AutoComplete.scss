@@ -1,0 +1,81 @@
+@mixin search-input(
+  // $border-bottom: 1px solid #ececec,
+  $height: 40px,
+  $background-color: #f4f5f7,
+  $color: #9b9b9b,
+  $font-size: 14px,
+  $border-radius: 2px
+) {
+  width: 100%;
+  border: none;
+  // border-bottom: $border-bottom;
+  height: $height;
+  background-color: $background-color;
+  color: $color;
+  font-size: $font-size;
+  border-radius: $border-radius;
+  box-sizing: border-box;
+  padding-left: 16px;
+  text-overflow: ellipsis;
+}
+
+.cm-autocomplete-container {
+  position: relative;
+  width: 400px;
+  .search-input {
+    @include search-input();
+    outline: none;
+    color: black;
+  }
+  .autocomplete-search-loader {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-align: right !important;
+    color: "#4A4A4A";
+  }
+  .search-icon {
+    font-size: 14px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #9b9b9b;
+  }
+  .autocomplete-options {
+    position: absolute;
+    top: 40px;
+    max-height: 350px;
+    width: 100%;
+    padding: 8px 0px;
+    background-color: white;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    z-index: 9;
+    .options-item {
+      display: flex;
+      background-color: #fff;
+      min-height: 25px;
+      padding: 5px;
+      margin: 0px 10px;
+      align-items: center;
+      color: #4a4a4a;
+      font-size: 14px;
+      z-index: 1;
+      border-bottom: 1px solid #ece5e5;
+      cursor: pointer;
+      &.hover {
+        background-color: #f3f4f7;
+        border-radius: 2px;
+      }
+      .option-card {
+        text-align: left;
+        p {
+          padding: 0;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
