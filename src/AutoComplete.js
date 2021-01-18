@@ -62,12 +62,14 @@ class AutoComplete extends React.Component {
         axios
           .get(`${process.env.REACT_APP_API_URL}${this.state.q}`)
           .then((res) => {
+            let foundInItems = false;
             const orginalData = cloneDeep(res.data);
             res.data.forEach((rec) => {
               rec.highlights.forEach((highlight) => {
                 rec[highlight.path] = highlight.texts.map((item, i) => {
                   if (item.type === "hit") {
                     if (highlight.path === "items") {
+                      foundInItems = true;
                       return (
                         <Fragment>
                           <li style={{ marginBottom: 8 }}>
@@ -93,6 +95,7 @@ class AutoComplete extends React.Component {
 
             this.setState({
               data: res.data,
+              foundInItems,
               orginalData,
               isFetchingData: false,
             });
@@ -124,7 +127,14 @@ class AutoComplete extends React.Component {
 
   render() {
     let { searchInputClassname } = this.props;
-    let { q, currentPosition, data, isFetchingData, orginalData } = this.state;
+    let {
+      q,
+      currentPosition,
+      data,
+      isFetchingData,
+      orginalData,
+      foundInItems,
+    } = this.state;
     return (
       <div
         className={classNames("cm-autocomplete-container")}
@@ -166,7 +176,7 @@ class AutoComplete extends React.Component {
                         <p style={{ paddingBottom: 8 }}>
                           <i>{data.name}</i>
                         </p>
-                        <p>{data.items}</p>
+                        <p>{foundInItems && data.items}</p>
                         <p>
                           {data.address} {` ${data.pincode}`}
                         </p>
