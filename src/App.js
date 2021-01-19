@@ -10,7 +10,6 @@ function App() {
           <Route path="/user/:id">
             {(props) => {
               let data = props.history.location.state;
-              console.log(data);
               return (
                 <div className="option-card" style={{ textAlign: "left" }}>
                   <p>

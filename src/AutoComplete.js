@@ -11,7 +11,7 @@ class AutoComplete extends React.Component {
     super(props);
     this.state = {
       q: "",
-      currentPosition: -1,
+      currentPosition: 0,
       tempQ: "",
       data: [],
     };
